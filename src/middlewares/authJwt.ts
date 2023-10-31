@@ -38,9 +38,8 @@ export async function isAdmin(req: Request, res: Response, next: NextFunction) {
       getEnv("JWT_SECRET_KEY")
     ) as jwt.JwtPayload;
     const loggedUser = decoded["user"] as User;
-    const user = await User.findByPk(loggedUser.id);
 
-    if (user!.role == Role.Admin) {
+    if (loggedUser!.role == Role.Admin) {
       next();
     } else {
       return res.status(401).json({
